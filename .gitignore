@@ -1,0 +1,20 @@
+# FlowForge — Go Workflow Automation
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+/dist/
+*.log
+.env
+.env.*
+server.exe
+node_modules/
+web/dist/
+web/node_modules/
+__pycache__/
+.DS_Store
+.air.toml.local

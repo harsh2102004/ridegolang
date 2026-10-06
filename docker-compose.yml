@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: org-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Shinas
+      POSTGRES_DB: Org_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - org_postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: org-redis
+    ports:
+      - "6379:6379"
+
+  billing-service:
+    image: org-billing-service
+    container_name: org-billing-service
+    restart: unless-stopped
+    ports:
+      - "50052:50052"
+      - "8081:8081"
+    env_file:
+      - ../org-billing-service/.env
+
+  api-core:
+    build:
+      context: ./services/api-core
+      dockerfile: Dockerfile
+    image: org-api-core
+    container_name: org-api-core
+    depends_on: 
+      - redis
+      - billing-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./services/api-core/.env
+    environment:
+      REDIS_ADDR: org-redis:6379
+      BILLING_GRPC_ADDR: org-billing-service:50052
+
+  frontend:
+    build:
+      context: ../OrgFrontend
+      dockerfile: Dockerfile
+    image: org-frontend
+    container_name: org-frontend
+    depends_on:
+      - api-core
+    ports:
+      - "5173:80"
+
+volumes:
+  org_postgres_data:

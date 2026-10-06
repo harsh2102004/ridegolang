@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS workflow_usage;
+DROP TABLE IF EXISTS webhook_triggers;
+DROP TABLE IF EXISTS workflow_edges;
+DROP TABLE IF EXISTS workflow_step_runs;
+DROP TABLE IF EXISTS workflow_runs;
+DROP TABLE IF EXISTS workflow_steps;
+DROP TABLE IF EXISTS workflows;
+DROP TABLE IF EXISTS connected_accounts;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_gemini_keys;
